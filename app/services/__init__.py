@@ -1,0 +1,1 @@
+from app.services.insert import insert_records
