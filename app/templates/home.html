@@ -1,7 +1,21 @@
 <!doctype html>
 
 <html lang="en">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+
+<head>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <!-- datatables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.css" />
+
+
+    <!-- chartjs -->
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
     integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg=="
     crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"
@@ -18,10 +32,141 @@
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
     integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w=="
-    crossorigin="anonymous" />
-hi {{name}}
-<canvas id="line-chart" width="400px" height="200px"></canvas>
-<script>
+    crossorigin="anonymous" /> -->
+
+
+    <!-- coreui -->
+
+    <!-- <link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css"> -->
+
+
+</head>
+
+<body>
+    <!-- <canvas id="line-chart" width="400px" height="200px"></canvas> -->
+    <div class="m-5">
+        <h3>Latest Reading</h3>
+        <div class="row mt-5">
+            <div class="col-3">
+                {% with name='Temperature', value=output_data['latest_record']['temperature'], suffix=' \u00b0C', bg_color='#ff3333'  %}
+                {% include 'components/card.html' %}
+                {% endwith %}
+
+            </div>
+            <div class="col-3">
+                {%  with name='Pressure' , value=output_data['latest_record']['pressure'], suffix=' mBar', bg_color='#1a53ff' %}
+                {% include 'components/card.html'%}
+                {% endwith %}
+            </div>
+            <div class="col-3">
+                {%  with name='Humidity' , value=output_data['latest_record']['humidity'], suffix=' %', bg_color='#00e64d' %}
+                {% include 'components/card.html'%}
+                {% endwith %}
+            </div>
+            <div class="col-3">
+                {%  with name='Ambient Light' , value=output_data['latest_record']['light'], suffix=' Lux', bg_color='#ff8c1a' %}
+                {% include 'components/card.html'%}
+                {% endwith %}
+            </div>
+        </div>
+
+    </div>
+    <div class="ml-5">
+        <h4>Past Readings</h4>
+    </div>
+    <div class="mt-5" style="margin: auto; width: 80%;">
+        <table class="table-responsive" id="example" style="width: auto;">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Recorded</th>
+                    <th scope="col">Temperature (C)</th>
+                    <th scope="col">Pressure (mBar)</th>
+                    <th scope="col">Humidity</th>
+                    <th scope="col">Ambient Light</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in output_data['all_records'] %}
+
+
+
+                <tr>
+                    <th scope="row">{{record.recorded}}</th>
+                    <td>{{record.temperature}}</td>
+                    <td>{{record.pressure}}</td>
+                    <td>{{record.humidity}} %</td>
+                    <td>{{record.light}}</td>
+                </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- datatables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/datatables.min.js"></script>
+    <script>
+        $(function () {
+            $(document).ready(function () {
+                $('#example').DataTable(
+                    {
+                        "order": [[0, "desc"]],
+                        responsive: true,
+                        autoWidth: false,
+                        // searching: false,
+                        columns: [
+                            { width: "30%" },
+                            { width: "15%" },
+                            { width: "15%" },
+                            { width: "15%" },
+                            { width: "15%" },
+                        ]
+                    }
+                );
+            });
+        });
+    </script>
+</body>
+
+
+<!-- coreui -->
+<!-- <script src="https://unpkg.com/@coreui/coreui/dist/js/coreui.bundle.min.js"></script> -->
+
+<!-- <script>
+    var ctx = document.getElementById('line-chart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                xAxisID:'recorded',
+                data: {{output_data.all_records |tojson|safe}}
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'time'
+                }]
+            }
+        }
+    });
+</script> -->
+
+
+<!-- <script>
     new Chart(document.getElementById("line-chart"), {
         type: 'line',
         data: {
@@ -62,6 +207,6 @@ hi {{name}}
             responsive: true
         }
     });
-</script>
+</script> -->
 
 </html>
