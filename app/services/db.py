@@ -13,4 +13,4 @@ def insert_records_to_db(records):
     return False
 
 def fetch_all_records():
-    return list(collection.find().sort('_id', -1))
+    return list(collection.find().sort('recorded', -1))

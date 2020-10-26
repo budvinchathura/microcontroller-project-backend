@@ -17,8 +17,8 @@ def submit():
         <status>400</status><message>XML parsing failed</message></root>'
         status_code = 400
     else:    
-        # pp = pprint.PrettyPrinter(indent=2)
-        # pp.pprint(alert_list)
+        pp = pprint.PrettyPrinter(indent=2)
+        pp.pprint(alert_list)
         insert_status = False;
         try:
             insert_status = insert_records(alert_list);

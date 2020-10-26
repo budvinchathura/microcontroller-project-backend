@@ -46,6 +46,7 @@
     <!-- <canvas id="line-chart" width="400px" height="200px"></canvas> -->
     <div class="m-5">
         <h3>Latest Reading</h3>
+        <h6>Recorded At : {{output_data.latest_record.recorded}}</h6>
         <div class="row mt-5">
             <div class="col-3">
                 {% with name='Temperature', value=output_data['latest_record']['temperature'], suffix=' \u00b0C', bg_color='#ff3333'  %}
