@@ -22,7 +22,8 @@ def submit():
         insert_status = False;
         try:
             insert_status = insert_records(alert_list);
-        except Exception:
+        except Exception as e:
+            print(e)
             xml_output = '<?xml version="1.0" encoding="UTF-8"?><root> \
             <status>500</status><message>Server Error, Please Try Again</message></root>'
             status_code = 500

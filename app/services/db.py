@@ -2,7 +2,7 @@ from pymongo import MongoClient
 
 client = MongoClient('localhost', 27017)
 db = client['microcontroller-project']
-collection = db['MCU-data-1']
+collection = db['MCU-data-2']
 
 def insert_records_to_db(records):
     print(records)

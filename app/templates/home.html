@@ -49,23 +49,23 @@
         <h6>Recorded At : {{output_data.latest_record.recorded}}</h6>
         <div class="row mt-5">
             <div class="col-3">
-                {% with name='Temperature', value=output_data['latest_record']['temperature'], suffix=' \u00b0C', bg_color='#ff3333'  %}
+                {% with name='Temperature', value=output_data['latest_record']['temperature'], deviation=output_data['latest_record']['temperature_dev'], suffix=' \u00b0C', bg_color='#ff3333'  %}
                 {% include 'components/card.html' %}
                 {% endwith %}
 
             </div>
             <div class="col-3">
-                {%  with name='Pressure' , value=output_data['latest_record']['pressure'], suffix=' mBar', bg_color='#1a53ff' %}
+                {%  with name='Pressure' , value=output_data['latest_record']['pressure'], deviation=output_data['latest_record']['pressure_dev'], suffix=' mBar', bg_color='#1a53ff' %}
                 {% include 'components/card.html'%}
                 {% endwith %}
             </div>
             <div class="col-3">
-                {%  with name='Humidity' , value=output_data['latest_record']['humidity'], suffix=' %', bg_color='#00e64d' %}
+                {%  with name='Humidity' , value=output_data['latest_record']['humidity'], deviation=output_data['latest_record']['humidity_dev'], suffix=' %', bg_color='#00e64d' %}
                 {% include 'components/card.html'%}
                 {% endwith %}
             </div>
             <div class="col-3">
-                {%  with name='Ambient Light' , value=output_data['latest_record']['light'], suffix=' Lux', bg_color='#ff8c1a' %}
+                {%  with name='Ambient Light' , value=output_data['latest_record']['light'], deviation=output_data['latest_record']['light_dev'], suffix=' Lux', bg_color='#ff8c1a' %}
                 {% include 'components/card.html'%}
                 {% endwith %}
             </div>
@@ -80,10 +80,10 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Recorded</th>
-                    <th scope="col">Temperature (C)</th>
+                    <th scope="col">Temperature (&#176C)</th>
                     <th scope="col">Pressure (mBar)</th>
-                    <th scope="col">Humidity</th>
-                    <th scope="col">Ambient Light</th>
+                    <th scope="col">Humidity (%)</th>
+                    <th scope="col">Ambient Light (Lux)</th>
                 </tr>
             </thead>
             <tbody>
@@ -93,10 +93,10 @@
 
                 <tr>
                     <th scope="row">{{record.recorded}}</th>
-                    <td>{{record.temperature}}</td>
-                    <td>{{record.pressure}}</td>
-                    <td>{{record.humidity}} %</td>
-                    <td>{{record.light}}</td>
+                    <td>{{record.temperature}} (&#xB1 {{record.temperature_dev}})</td>
+                    <td>{{record.pressure}} (&#xB1 {{record.pressure_dev}})</td>
+                    <td>{{record.humidity}}% (&#xB1 {{record.humidity_dev}})</td>
+                    <td>{{record.light}} (&#xB1 {{record.light_dev}})</td>
                 </tr>
                 {% endfor %}
 
@@ -129,7 +129,7 @@
                         autoWidth: false,
                         // searching: false,
                         columns: [
-                            { width: "30%" },
+                            { width: "20%" },
                             { width: "15%" },
                             { width: "15%" },
                             { width: "15%" },

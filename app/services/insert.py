@@ -1,7 +1,7 @@
 from app.services.db import insert_records_to_db
 import datetime
 
-sorted_keys = ['humidity', 'light', 'pressure', 'recorded', 'temperature']
+sorted_keys = ['humidity', 'humidity_dev', 'light', 'light_dev', 'pressure', 'pressure_dev', 'recorded', 'temperature', 'temperature_dev']
 
 def insert_records(cap_object):
     formatted_records = []
@@ -15,9 +15,14 @@ def insert_records(cap_object):
                 return False
             
             record['humidity'] = float(record['humidity'])
+            record['humidity_dev'] = float(record['humidity_dev'])
+
+            record['light_dev'] = float(record['light_dev'])
             record['light'] = float(record['light'])
             record['pressure'] = float(record['pressure'])
+            record['pressure_dev'] = float(record['pressure_dev'])
             record['temperature'] = float(record['temperature'])
+            record['temperature_dev'] = float(record['temperature_dev'])
 
             record['recorded'] = str(record['recorded'])
 
